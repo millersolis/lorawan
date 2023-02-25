@@ -46,7 +46,7 @@ public:
   SimpleGatewayLoraPhy ();
   virtual ~SimpleGatewayLoraPhy ();
 
-  virtual void StartReceive (Ptr<Packet> packet, double rxPowerDbm, uint8_t sf,
+  virtual void StartReceive (Ptr<Packet> packet, double rxPowerDbm, uint8_t sf, uint32_t bw,
                              Time duration, double frequencyMHz);
 
   virtual void EndReceive (Ptr<Packet> packet,

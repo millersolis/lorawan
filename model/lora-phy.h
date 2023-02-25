@@ -19,7 +19,7 @@
  */
 
 #ifndef LORA_PHY_H
-#define LORA_PHY_H
+// #define LORA_PHY_H
 
 #include "ns3/object.h"
 #include "ns3/callback.h"

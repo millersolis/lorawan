@@ -347,7 +347,6 @@ LorawanMacHelper::ApplyCommonEuConfigurations (Ptr<LorawanMac> lorawanMac) const
   // DataRate -> SF, DataRate -> Bandwidth     //
   // and DataRate -> MaxAppPayload conversions //
   ///////////////////////////////////////////////
-  // [MILLER] TODO: Calculate this???
   lorawanMac->SetSfForDataRate (std::vector<uint8_t>{12, 11, 10, 9, 8, 7, 7});
   lorawanMac->SetBandwidthForDataRate (
       std::vector<double>{125000, 125000, 125000, 125000, 125000, 125000, 250000});
@@ -357,7 +356,7 @@ LorawanMacHelper::ApplyCommonEuConfigurations (Ptr<LorawanMac> lorawanMac) const
   // [MILLER] TODO: use enums for sf and bw
   lorawanMac->SetSpreadingFactor(m_spreadingFactor);
   lorawanMac->SetBandwidth(m_bandwidth);
-  // lorawanMAc->PopulateDataRate();
+  // lorawanMAc->PopulateDataRate();  // And mas payload size MTU??
 }
 
 ///////////////////////////////

@@ -78,6 +78,10 @@ public:
    */
   Ptr<LoraPhy> GetPhy (void) const;
 
+  uint8_t GetSF (void) const;
+
+  uint32_t GetBW (void) const;
+
   /**
    * Send a packet through the LoRaWAN stack.
    *

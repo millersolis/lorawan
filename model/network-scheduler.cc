@@ -118,7 +118,7 @@ NetworkScheduler::OnReceiveWindowOpportunity (LoraDeviceAddress deviceAddress, i
       if (needsReply)
         {
           NS_LOG_INFO ("A reply is needed");
-
+  // MILLER START HERE
           // Send the reply through that gateway
           m_status->SendThroughGateway (m_status->GetReplyForDevice
                                           (deviceAddress, window),

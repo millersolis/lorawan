@@ -148,7 +148,7 @@ public:
 
   // Implementation of LoraPhy's pure virtual functions
   virtual void StartReceive (Ptr<Packet> packet, double rxPowerDbm,
-                             uint8_t sf, Time duration, double frequencyMHz) = 0;
+                             uint8_t sf, uint32_t bw, Time duration, double frequencyMHz) = 0;
 
   // Implementation of LoraPhy's pure virtual functions
   virtual void EndReceive (Ptr<Packet> packet,

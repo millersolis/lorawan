@@ -140,6 +140,7 @@ NS_LOG_COMPONENT_DEFINE ("LoraHelper");
         }
 
       node->AddDevice (device);
+      device->SetSF()
       devices.Add (device);
       NS_LOG_DEBUG ("node=" << node << ", mob=" << node->GetObject<MobilityModel> ()->GetPosition ());
     }

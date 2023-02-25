@@ -364,7 +364,7 @@ ClassAEndDeviceLorawanMac::OpenSecondReceiveWindow (void)
     (m_secondReceiveWindowFrequency);
   m_phy->GetObject<EndDeviceLoraPhy> ()->SetSpreadingFactor (GetSfFromDataRate
                                                                (m_secondReceiveWindowDataRate));
-
+// MILLER START HERE
   //Calculate the duration of a single symbol for the second receive window DR
   double tSym = pow (2, GetSfFromDataRate (GetSecondReceiveWindowDataRate ())) / GetBandwidthFromDataRate ( GetSecondReceiveWindowDataRate ());
 

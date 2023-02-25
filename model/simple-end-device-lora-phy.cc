@@ -112,11 +112,11 @@ SimpleEndDeviceLoraPhy::Send (Ptr<Packet> packet, LoraTxParameters txParams,
 
 void
 SimpleEndDeviceLoraPhy::StartReceive (Ptr<Packet> packet, double rxPowerDbm,
-                                      uint8_t sf, Time duration, double frequencyMHz)
+                                      uint8_t sf, uint32_t bw, Time duration, double frequencyMHz)
 {
 
-  NS_LOG_FUNCTION (this << packet << rxPowerDbm << unsigned (sf) << duration <<
-                   frequencyMHz);
+  NS_LOG_FUNCTION (this << packet << rxPowerDbm << unsigned (sf) << unsigned(bw) <<
+                   duration << frequencyMHz);
 
   // Notify the LoraInterferenceHelper of the impinging signal, and remember
   // the event it creates. This will be used then to correctly handle the end
@@ -164,6 +164,7 @@ SimpleEndDeviceLoraPhy::StartReceive (Ptr<Packet> packet, double rxPowerDbm,
         bool canLockOnPacket = true;
 
         // Save needed sensitivity
+        // [MILLER] TODO: Add bw for sensitivity
         double sensitivity = EndDeviceLoraPhy::sensitivity[unsigned(sf) - 7];
 
         // Check frequency
@@ -207,12 +208,35 @@ SimpleEndDeviceLoraPhy::StartReceive (Ptr<Packet> packet, double rxPowerDbm,
             canLockOnPacket = false;
           }
 
+        // Check Bandwidth
+        /////////////////////////
+        // End devices only listen to a single sf and bw -> data date
+        if (bw != m_bw)
+          {
+            NS_LOG_INFO ("Packet lost because it's using BW" << unsigned(bw) <<
+                         ", while we are listening for BW" << unsigned(m_bw));
+
+            // Fire the trace source for this event.
+            // [MILLER] TODO: impl for bw
+
+            // if (m_device)
+            //   {
+            //     m_wrongSf (packet, m_device->GetNode ()->GetId ());
+            //   }
+            // else
+            //   {
+            //     m_wrongSf (packet, 0);
+            //   }
+
+            canLockOnPacket = false;
+          }
+
         // Check Sensitivity
         ////////////////////
         if (rxPowerDbm < sensitivity)
           {
             NS_LOG_INFO ("Dropping packet reception of packet with sf = " <<
-                         unsigned(sf) << " because under the sensitivity of " <<
+                         unsigned(sf) << " BW = " << bw << " because under the sensitivity of " <<
                          sensitivity << " dBm");
 
             // Fire the trace source for this event.

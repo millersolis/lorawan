@@ -178,6 +178,7 @@ NetworkStatus::SendThroughGateway (Ptr<Packet> packet, Address gwAddress)
 Ptr<Packet>
 NetworkStatus::GetReplyForDevice (LoraDeviceAddress edAddress, int windowNumber)
 {
+  // MILLER START HERE
   // Get the reply packet
   Ptr<EndDeviceStatus> edStatus = m_endDeviceStatuses.find (edAddress)->second;
   Ptr<Packet> packet = edStatus->GetCompleteReplyPacket ();

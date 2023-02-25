@@ -662,7 +662,7 @@ EndDeviceLorawanMac::GetMaxNumberOfTransmissions (void)
 void
 EndDeviceLorawanMac::SetDataRate (uint8_t dataRate)
 {
-  // TODO MILLER START HERE: Create set SF and BW and calculate data rate isntead
+  // TODO ??: Create set SF and BW and calculate data rate isntead
   // remember Gatweay resplies according to end device sf data rate bw i think]
   // could bastract into different hw chips ics sensibiulity
   NS_LOG_FUNCTION (this << unsigned (dataRate));
@@ -674,6 +674,9 @@ uint8_t
 EndDeviceLorawanMac::GetDataRate (void)
 {
   NS_LOG_FUNCTION (this);
+
+  // ================
+  m_dataRate = 
 
   return m_dataRate;
 }
@@ -739,6 +742,9 @@ EndDeviceLorawanMac::OnLinkAdrReq (uint8_t dataRate, uint8_t txPower,
   // can check against this.
   uint8_t sf = GetSfFromDataRate (dataRate);
   double bw = GetBandwidthFromDataRate (dataRate);
+
+  // [MILLER] TODO: Add check for sf & bw ok
+
   NS_LOG_DEBUG ("SF: " << unsigned (sf) << ", BW: " << bw);
   if (sf == 0 || bw == 0)
     {
@@ -749,6 +755,7 @@ EndDeviceLorawanMac::OnLinkAdrReq (uint8_t dataRate, uint8_t txPower,
   // We need to know we can use it in at least one of the enabled channels
   // Cycle through available channels, stop when at least one is enabled for the
   // specified dataRate.
+  // Check freequency?? [MILLER] likely not needed since only one supported for EU
   if (dataRateOk && channelMaskOk)                 // If false, skip the check
     {
       bool foundAvailableChannel = false;

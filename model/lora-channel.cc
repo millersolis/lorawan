@@ -139,7 +139,7 @@ LoraChannel::Send (Ptr< LoraPhy > sender, Ptr< Packet > packet,
           // Compute delay using the delay model
           Time delay = m_delay->GetDelay (senderMobility, receiverMobility);
 
-          // Compute received power using the loss model [miller] TODO: Pass txParams
+          // Compute received power using the loss model [miller] TODO: Pass txParams sf & bw
           double rxPowerDbm = GetRxPower (txPowerDbm, senderMobility,
                                           receiverMobility);
 
@@ -166,6 +166,7 @@ LoraChannel::Send (Ptr< LoraPhy > sender, Ptr< Packet > packet,
           LoraChannelParameters parameters;
           parameters.rxPowerDbm = rxPowerDbm;
           parameters.sf = txParams.sf;
+          parameters.bw = txParams.bandwidthHz;
           parameters.duration = duration;
           parameters.frequencyMHz = frequencyMHz;
 
@@ -187,7 +188,7 @@ LoraChannel::Receive (uint32_t i, Ptr<Packet> packet,
   NS_LOG_FUNCTION (this << i << packet << parameters);
 
   // Call the appropriate PHY instance to let it begin reception
-  m_phyList[i]->StartReceive (packet, parameters.rxPowerDbm, parameters.sf,
+  m_phyList[i]->StartReceive (packet, parameters.rxPowerDbm, parameters.sf, parameters.bw,
                               parameters.duration, parameters.frequencyMHz);
 }
 
@@ -201,6 +202,7 @@ LoraChannel::GetRxPower (double txPowerDbm, Ptr<MobilityModel> senderMobility,
 std::ostream &operator << (std::ostream &os, const LoraChannelParameters &params)
 {
   os << "(rxPowerDbm: " << params.rxPowerDbm << ", SF: " << unsigned(params.sf) <<
+    ", BW: " << unsigned(params.bw) <<
     ", durationSec: " << params.duration.GetSeconds () <<
     ", frequencyMHz: " << params.frequencyMHz << ")";
   return os;

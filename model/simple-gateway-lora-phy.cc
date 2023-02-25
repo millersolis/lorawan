@@ -116,9 +116,9 @@ SimpleGatewayLoraPhy::Send (Ptr<Packet> packet, LoraTxParameters txParams, doubl
 
 void
 SimpleGatewayLoraPhy::StartReceive (Ptr<Packet> packet, double rxPowerDbm, uint8_t sf,
-                                    Time duration, double frequencyMHz)
+                                    uint32_t bw, Time duration, double frequencyMHz)
 {
-  NS_LOG_FUNCTION (this << packet << rxPowerDbm << duration << frequencyMHz);
+  NS_LOG_FUNCTION (this << packet << rxPowerDbm << sf << bw << duration << frequencyMHz);
 
   // Fire the trace source
   m_phyRxBeginTrace (packet);
@@ -127,7 +127,7 @@ SimpleGatewayLoraPhy::StartReceive (Ptr<Packet> packet, double rxPowerDbm, uint8
     {
       // If we get to this point, there are no demodulators we can use
       NS_LOG_INFO ("Dropping packet reception of packet with sf = "
-                   << unsigned (sf) << " because we are in TX mode");
+                   << unsigned (sf) << " and BW = " << unsigned(bw) << " because we are in TX mode");
 
       m_phyRxEndTrace (packet);
 
@@ -161,7 +161,8 @@ SimpleGatewayLoraPhy::StartReceive (Ptr<Packet> packet, double rxPowerDbm, uint8
         {
           // See whether the reception power is above or below the sensitivity
           // for that spreading factor
-          double sensitivity = SimpleGatewayLoraPhy::sensitivity[unsigned (sf) - 7];
+          // [MILLER] TODO: check bw for sensitivity as well
+          double sensitivity = SimpleGatewayLoraPhy::sensitivity[unsigned (sf) - 7];  //[MILLER]
 
           if (rxPowerDbm < sensitivity) // Packet arrived below sensitivity
             {
