@@ -662,6 +662,9 @@ EndDeviceLorawanMac::GetMaxNumberOfTransmissions (void)
 void
 EndDeviceLorawanMac::SetDataRate (uint8_t dataRate)
 {
+  // TODO MILLER START HERE: Create set SF and BW and calculate data rate isntead
+  // remember Gatweay resplies according to end device sf data rate bw i think]
+  // could bastract into different hw chips ics sensibiulity
   NS_LOG_FUNCTION (this << unsigned (dataRate));
 
   m_dataRate = dataRate;

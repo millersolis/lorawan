@@ -203,7 +203,7 @@ Gateway model
 
 The chip installed on LoRa GWs needs special attention because of its
 architecture: since it is characterized by the presence of 8 parallel *receive
-paths*, it can receive multiple packets in parallel [sx1301]_. This
+paths*, it can receive multiple packets in parallel [sx1301]_ [MILLER]. This
 behavior is represented in the simulator through a ``ReceptionPath`` object that
 behaves as an ``EndDeviceLoraPhy``, locking into incoming packets and comparing
 them to others to determine correct reception by using the gateway's

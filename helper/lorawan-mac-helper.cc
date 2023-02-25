@@ -70,6 +70,18 @@ LorawanMacHelper::SetRegion (enum LorawanMacHelper::Regions region)
   m_region = region;
 }
 
+void
+LorawanMacHelper::SetSpreadingFactor (enum LorawanMacHelper::SF sf)
+{
+  m_spreadingFactor = sf;
+}
+
+void
+LorawanMacHelper::SetBandwidth (enum LorawanMacHelper::BW bw)
+{
+  m_bandwidth = bw;
+}
+
 Ptr<LorawanMac>
 LorawanMacHelper::Create (Ptr<Node> node, Ptr<NetDevice> device) const
 {
@@ -322,7 +334,7 @@ LorawanMacHelper::ApplyCommonEuConfigurations (Ptr<LorawanMac> lorawanMac) const
   //////////////////////
   // Default channels //
   //////////////////////
-  Ptr<LogicalLoraChannel> lc1 = CreateObject<LogicalLoraChannel> (868.1, 0, 5);
+  Ptr<LogicalLoraChannel> lc1 = CreateObject<LogicalLoraChannel> (868.1, 0, 5); // Should be 5.5?? or other?
   Ptr<LogicalLoraChannel> lc2 = CreateObject<LogicalLoraChannel> (868.3, 0, 5);
   Ptr<LogicalLoraChannel> lc3 = CreateObject<LogicalLoraChannel> (868.5, 0, 5);
   channelHelper.AddChannel (lc1);
@@ -335,11 +347,17 @@ LorawanMacHelper::ApplyCommonEuConfigurations (Ptr<LorawanMac> lorawanMac) const
   // DataRate -> SF, DataRate -> Bandwidth     //
   // and DataRate -> MaxAppPayload conversions //
   ///////////////////////////////////////////////
+  // [MILLER] TODO: Calculate this???
   lorawanMac->SetSfForDataRate (std::vector<uint8_t>{12, 11, 10, 9, 8, 7, 7});
   lorawanMac->SetBandwidthForDataRate (
       std::vector<double>{125000, 125000, 125000, 125000, 125000, 125000, 250000});
   lorawanMac->SetMaxAppPayloadForDataRate (
       std::vector<uint32_t>{59, 59, 59, 123, 230, 230, 230, 230});
+
+  // [MILLER] TODO: use enums for sf and bw
+  lorawanMac->SetSpreadingFactor(m_spreadingFactor);
+  lorawanMac->SetBandwidth(m_bandwidth);
+  // lorawanMAc->PopulateDataRate();
 }
 
 ///////////////////////////////
@@ -427,7 +445,7 @@ LorawanMacHelper::ApplyCommonSingleChannelConfigurations (Ptr<LorawanMac> lorawa
   //////////////
 
   LogicalLoraChannelHelper channelHelper;
-  channelHelper.AddSubBand (868, 868.6, 0.01, 14);
+  channelHelper.AddSubBand (868, 868.6, 0.01, 14);  //typical is 14, max with boost pin on SX1276 is 20
   channelHelper.AddSubBand (868.7, 869.2, 0.001, 14);
   channelHelper.AddSubBand (869.4, 869.65, 0.1, 27);
 
@@ -474,6 +492,8 @@ LorawanMacHelper::SetSpreadingFactorsUp (NodeContainer endDevices, NodeContainer
       Ptr<MobilityModel> bestGatewayPosition = bestGateway->GetObject<MobilityModel> ();
 
       // Assume devices transmit at 14 dBm
+      /* LogicalLoraChannelHelper::GetTxPowerForChannel (Ptr<LogicalLoraChannel>
+                                                logicalChannel)*/
       double highestRxPower = channel->GetRxPower (14, position, bestGatewayPosition);
 
       for (NodeContainer::Iterator currentGw = gateways.Begin () + 1; currentGw != gateways.End ();

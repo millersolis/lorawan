@@ -36,7 +36,7 @@ namespace lorawan {
 class LoraChannel;
 
 /**
- * Class modeling a Lora SX1301 chip.
+ * Class modeling a Lora SX1301 chip. [MILLER]
  *
  * This class models the behaviour of the chip employed in Lora gateways. These
  * chips are characterized by the presence of 8 receive paths, or parallel

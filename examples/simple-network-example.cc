@@ -85,6 +85,8 @@ int main (int argc, char *argv[])
 
   // Create the LorawanMacHelper
   LorawanMacHelper macHelper = LorawanMacHelper ();
+  macHelper.SetSpreadingFactor(LorawanMacHelper::SF::sf_12);
+  macHelper.SetBandwidth(LorawanMacHelper::BW::bw_125kHz);
 
   // Create the LoraHelper
   LoraHelper helper = LoraHelper ();

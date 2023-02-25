@@ -167,7 +167,7 @@ LoraPhy::GetOnAirTime (Ptr<Packet> packet, LoraTxParameters txParams)
   NS_LOG_FUNCTION (packet << txParams);
 
   // The contents of this function are based on [1].
-  // [1] SX1272 LoRa modem designer's guide.
+  // [1] SX1272 LoRa modem designer's guide.  [MILLER]
 
   // Compute the symbol duration
   // Bandwidth is in Hz

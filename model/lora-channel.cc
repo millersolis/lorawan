@@ -139,7 +139,7 @@ LoraChannel::Send (Ptr< LoraPhy > sender, Ptr< Packet > packet,
           // Compute delay using the delay model
           Time delay = m_delay->GetDelay (senderMobility, receiverMobility);
 
-          // Compute received power using the loss model
+          // Compute received power using the loss model [miller] TODO: Pass txParams
           double rxPowerDbm = GetRxPower (txPowerDbm, senderMobility,
                                           receiverMobility);
 

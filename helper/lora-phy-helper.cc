@@ -27,7 +27,7 @@ namespace lorawan {
 
 NS_LOG_COMPONENT_DEFINE ("LoraPhyHelper");
 
-LoraPhyHelper::LoraPhyHelper () : m_maxReceptionPaths (8), m_txPriority (true)
+LoraPhyHelper::LoraPhyHelper () : m_maxReceptionPaths (8), m_txPriority (true) // [MILLER]
 {
   NS_LOG_FUNCTION (this);
 }
@@ -103,7 +103,7 @@ LoraPhyHelper::Create (Ptr<Node> node, Ptr<NetDevice> device) const
 
       int receptionPaths = 0;
       // Set maxReceptionPaths as a parameter
-      // int maxReceptionPaths = 8;
+      // int maxReceptionPaths = 8; [MILLER]
       while (receptionPaths < m_maxReceptionPaths)
         {
           phy->GetObject<SimpleGatewayLoraPhy> ()->AddReceptionPath ();

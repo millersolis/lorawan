@@ -250,7 +250,8 @@ LogicalLoraChannelHelper::AddEvent (Time duration,
 
 double
 LogicalLoraChannelHelper::GetTxPowerForChannel (Ptr<LogicalLoraChannel>
-                                                logicalChannel)
+                                                logicalChannel) // [MILLER]
+                                              
 {
   NS_LOG_FUNCTION_NOARGS ();
 

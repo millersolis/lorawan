@@ -39,7 +39,7 @@ class LoraChannel;
 
 /**
  * Structure to collect all parameters that are used to compute the duration of
- * a packet (excluding payload length).
+ * a packet (excluding payload length). [MILLER]
  */
 struct LoraTxParameters
 {

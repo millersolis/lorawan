@@ -84,7 +84,7 @@ SimpleEndDeviceLoraPhy::Send (Ptr<Packet> packet, LoraTxParameters txParams,
   m_channel->Send (this, packet, txPowerDbm, txParams, duration, frequencyMHz);
 
   // Schedule the switch back to STANDBY mode.
-  // For reference see SX1272 datasheet, section 4.1.6
+  // For reference see SX1272 datasheet, section 4.1.6 [REFERENCE MILLER]
   Simulator::Schedule (duration, &EndDeviceLoraPhy::SwitchToStandby, this);
 
   // Schedule the txFinished callback, if it was set

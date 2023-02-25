@@ -36,7 +36,7 @@ namespace lorawan {
 class LoraChannel;
 
 /**
- * Class modeling a Lora SX1301 chip.
+ * Class modeling a Lora SX1301 chip. [MILLER]
  */
 class SimpleGatewayLoraPhy : public GatewayLoraPhy
 {

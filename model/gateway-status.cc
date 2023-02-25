@@ -93,7 +93,7 @@ GatewayStatus::GetGatewayMac (void)
 bool
 GatewayStatus::IsAvailableForTransmission (double frequency)
 {
-  // We can't send multiple packets at once, see SX1301 V2.01 page 29
+  // We can't send multiple packets at once, see SX1301 V2.01 page 29 [MILLER]
 
   // Check that the gateway was not already "booked"
   if (m_nextTransmissionTime > Simulator::Now () - MilliSeconds (1))

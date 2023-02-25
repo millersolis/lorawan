@@ -104,32 +104,53 @@ LorawanMac::SetLogicalLoraChannelHelper (LogicalLoraChannelHelper helper)
   m_channelHelper = helper;
 }
 
+void
+LorawanMac::SetSpreadingFactor (uint8_t sf)
+{
+  m_spreadingFactor = sf;
+  NS_LOG_FUNCTION (this << unsigned (m_spreadingFactor));
+}
+
+void
+LorawanMac::SetBandwidth (uint8_t bw)
+{
+  m_bandwidth = bw;
+  NS_LOG_FUNCTION (this << unsigned (m_bandwidth));
+}
+
 uint8_t
 LorawanMac::GetSfFromDataRate (uint8_t dataRate)
 {
-  NS_LOG_FUNCTION (this << unsigned(dataRate));
+  // NS_LOG_FUNCTION (this << unsigned(dataRate));
 
-  // Check we are in range
-  if (dataRate >= m_sfForDataRate.size ())
-    {
-      return 0;
-    }
+  // // Check we are in range
+  // if (dataRate >= m_sfForDataRate.size ())
+  //   {
+  //     return 0;
+  //   }
 
-  return m_sfForDataRate.at (dataRate);
+  // return m_sfForDataRate.at (dataRate);
+
+  NS_LOG_FUNCTION (this << unsigned(dataRate) << "SF: " << m_spreadingFactor);
+  return m_spreadingFactor;
+
 }
 
 double
 LorawanMac::GetBandwidthFromDataRate (uint8_t dataRate)
 {
-  NS_LOG_FUNCTION (this << unsigned(dataRate));
+  // NS_LOG_FUNCTION (this << unsigned(dataRate));
 
-  // Check we are in range
-  if (dataRate > m_bandwidthForDataRate.size ())
-    {
-      return 0;
-    }
+  // // Check we are in range
+  // if (dataRate > m_bandwidthForDataRate.size ())
+  //   {
+  //     return 0;
+  //   }
 
-  return m_bandwidthForDataRate.at (dataRate);
+  // return m_bandwidthForDataRate.at (dataRate);
+
+  NS_LOG_FUNCTION (this << unsigned(dataRate) << "SF: " << m_bandwidth);
+  return m_bandwidth;
 }
 
 double
