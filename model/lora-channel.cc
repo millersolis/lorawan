@@ -195,6 +195,7 @@ double
 LoraChannel::GetRxPower (double txPowerDbm, Ptr<MobilityModel> senderMobility,
                          Ptr<MobilityModel> receiverMobility) const
 {
+  // TODO: update sf for lora loss models [Miller]
   return m_loss->CalcRxPower (txPowerDbm, senderMobility, receiverMobility);
 }
 
