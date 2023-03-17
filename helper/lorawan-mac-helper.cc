@@ -323,11 +323,12 @@ LorawanMacHelper::ApplyCommonEuConfigurations (Ptr<LorawanMac> lorawanMac) const
   // Default channels //
   //////////////////////
   Ptr<LogicalLoraChannel> lc1 = CreateObject<LogicalLoraChannel> (868.1, 0, 5);
-  Ptr<LogicalLoraChannel> lc2 = CreateObject<LogicalLoraChannel> (868.3, 0, 5);
-  Ptr<LogicalLoraChannel> lc3 = CreateObject<LogicalLoraChannel> (868.5, 0, 5);
+  // TODO: Decide if include all channels and randomize channel to send packet  [MILLER]
+  // Ptr<LogicalLoraChannel> lc2 = CreateObject<LogicalLoraChannel> (868.3, 0, 5);
+  // Ptr<LogicalLoraChannel> lc3 = CreateObject<LogicalLoraChannel> (868.5, 0, 5);
   channelHelper.AddChannel (lc1);
-  channelHelper.AddChannel (lc2);
-  channelHelper.AddChannel (lc3);
+  // channelHelper.AddChannel (lc2);
+  // channelHelper.AddChannel (lc3);
 
   lorawanMac->SetLogicalLoraChannelHelper (channelHelper);
 
