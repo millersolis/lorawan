@@ -287,8 +287,9 @@ LorawanMacHelper::ConfigureForEuRegion (Ptr<GatewayLorawanMac> gwMac) const
 
       std::vector<double> frequencies;
       frequencies.push_back (868.1);
-      frequencies.push_back (868.3);
-      frequencies.push_back (868.5);
+      // TODO: Decide if include all channels and randomize channel to send packet  [MILLER]
+      // frequencies.push_back (868.3);
+      // frequencies.push_back (868.5);
 
       for (auto &f : frequencies)
         {
