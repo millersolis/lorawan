@@ -297,7 +297,7 @@ LorawanMacHelper::ConfigureForEuRegion (Ptr<GatewayLorawanMac> gwMac) const
         }
 
       int receptionPaths = 0;
-      int maxReceptionPaths = 8;
+      int maxReceptionPaths = 1;  // single reception path for SX1276
       while (receptionPaths < maxReceptionPaths)
         {
           gwPhy->GetObject<GatewayLoraPhy> ()->AddReceptionPath ();
