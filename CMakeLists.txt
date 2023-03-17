@@ -3,6 +3,7 @@ set(source_files
     model/lorawan-mac.cc
     model/lora-phy.cc
     model/building-penetration-loss.cc
+    model/lora-propagation-loss-model.cc
     model/correlated-shadowing-propagation-loss-model.cc
     model/lora-channel.cc
     model/lora-interference-helper.cc
@@ -53,6 +54,7 @@ set(header_files
     model/lorawan-mac.h
     model/lora-phy.h
     model/building-penetration-loss.h
+    model/lora-propagation-loss-model.h
     model/correlated-shadowing-propagation-loss-model.h
     model/lora-channel.h
     model/lora-interference-helper.h
