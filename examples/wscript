@@ -13,3 +13,9 @@ def build(bld):
 
     obj = bld.create_ns3_program('energy-model-example', ['lorawan'])
     obj.source = 'energy-model-example.cc'
+
+    obj = bld.create_ns3_program('simple-lora-prop-loss-example', ['lorawan'])
+    obj.source = 'simple-lora-prop-loss-example.cc'
+
+    obj = bld.create_ns3_program('complete-lora-prop-loss-example', ['lorawan'])
+    obj.source = 'complete-lora-prop-loss-example.cc'
