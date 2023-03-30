@@ -150,7 +150,17 @@ LoraMacHelper::ConfigureForEuRegion (Ptr<EndDeviceLoraMac> edMac) const
   /////////////////////
   // Preamble length //
   /////////////////////
-  edMac->SetNPreambleSymbols (8);
+  /**
+   * The duration of a receive window in number of symbols. This should be
+   * converted to time based or the reception parameter used.
+   *
+   * The downlink preamble transmitted by the gateways contains 7 symbols.
+   * The receiver requires 5 symbols to detect the preamble and synchronize.
+   * Therefore there must be a 5 symbols overlap between the receive window
+   * and the transmitted preamble.
+   * (Ref: Recommended SX1272/76 Settings for EU868 LoRaWAN Network Operation )
+   */
+  edMac->SetNPreambleSymbols (7);
 
   //////////////////////////////////////
   // Second receive window parameters //
@@ -178,14 +188,15 @@ LoraMacHelper::ConfigureForEuRegion (Ptr<GatewayLoraMac> gwMac) const
       gwPhy->ResetReceptionPaths ();
 
       std::vector<double> frequencies;
+      // Use single channel for project
       frequencies.push_back (868.1);
-      frequencies.push_back (868.3);
-      frequencies.push_back (868.5);
+      // frequencies.push_back (868.3);
+      // frequencies.push_back (868.5);
 
       std::vector<double>::iterator it = frequencies.begin ();
 
       int receptionPaths = 0;
-      int maxReceptionPaths = 8;
+      int maxReceptionPaths = 1;  // single reception path for SX1276
       while (receptionPaths < maxReceptionPaths)
         {
           if (it == frequencies.end ())
@@ -216,12 +227,13 @@ LoraMacHelper::ApplyCommonEuConfigurations (Ptr<LoraMac> loraMac) const
   //////////////////////
   // Default channels //
   //////////////////////
+  // Use single channel for project
   Ptr<LogicalLoraChannel> lc1 = CreateObject<LogicalLoraChannel> (868.1, 0, 5);
-  Ptr<LogicalLoraChannel> lc2 = CreateObject<LogicalLoraChannel> (868.3, 0, 5);
-  Ptr<LogicalLoraChannel> lc3 = CreateObject<LogicalLoraChannel> (868.5, 0, 5);
+  // Ptr<LogicalLoraChannel> lc2 = CreateObject<LogicalLoraChannel> (868.3, 0, 5);
+  // Ptr<LogicalLoraChannel> lc3 = CreateObject<LogicalLoraChannel> (868.5, 0, 5);
   channelHelper.AddChannel (lc1);
-  channelHelper.AddChannel (lc2);
-  channelHelper.AddChannel (lc3);
+  // channelHelper.AddChannel (lc2);
+  // channelHelper.AddChannel (lc3);
 
   loraMac->SetLogicalLoraChannelHelper (channelHelper);
 
