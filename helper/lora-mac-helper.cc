@@ -186,7 +186,7 @@ LoraMacHelper::ConfigureForEuRegion (Ptr<GatewayLoraMac> gwMac) const
       std::vector<double>::iterator it = frequencies.begin ();
 
       int receptionPaths = 0;
-      int maxReceptionPaths = 8;
+      int maxReceptionPaths = 1;  // single reception path for SX1276
       while (receptionPaths < maxReceptionPaths)
         {
           if (it == frequencies.end ())
