@@ -100,7 +100,47 @@ private:
  * \ingroup propagation
  *
  * \brief The propagation loss follows a probablity distribution based on distance
- * and SF (Spreading Factor)
+ * and SF (Spreading Factor) for the RYLR896 using SX1276
+ */
+
+class RYLRLoraPropagationLossModel : public LoraPropagationLossModel
+{
+public:
+  /**
+   * \brief Get the type ID.
+   * \return the object TypeId
+   */
+  static TypeId GetTypeId (void);
+
+  RYLRLoraPropagationLossModel ();
+  RYLRLoraPropagationLossModel (uint8_t txSF);
+  virtual ~RYLRLoraPropagationLossModel ();
+
+private:
+  /**
+   * \brief Copy constructor
+   *
+   * Defined and unimplemented to avoid misuse
+   */
+  RYLRLoraPropagationLossModel (const RYLRLoraPropagationLossModel &);
+  /**
+   * \brief Copy constructor
+   *
+   * Defined and unimplemented to avoid misuse
+   * \returns
+   */
+  RYLRLoraPropagationLossModel & operator = (const RYLRLoraPropagationLossModel &);
+  virtual double DoCalcRxPower (double txPowerDbm,
+                                uint8_t txSF,
+                                Ptr<MobilityModel> a,
+                                Ptr<MobilityModel> b) const;
+  virtual int64_t DoAssignStreams (int64_t stream);
+};
+
+/**
+ * \ingroup propagation
+ *
+ * \brief Random propagation loss
  */ 
 class RandomLoraPropagationLossModel : public LoraPropagationLossModel
 {

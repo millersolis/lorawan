@@ -45,7 +45,11 @@ LoraPropagationLossModel::GetTypeId (void)
     .SetGroupName ("LoraPropagation")
     // No default constructor added since class has pure virtual methods
     // .AddConstructor<LoraPropagationLossModel> ()
-  ;
+    // .AddAttribute ("Variable", "The SF used to pick a loss every time CalcRxPower is invoked.",
+    //               DoubleValue (7),
+    //               MakeDoubleAccessor (&LoraPropagationLossModel::m_txSF),
+    //               MakeDoubleChecker<double> ())
+;
   return tid;
 }
 
@@ -80,6 +84,76 @@ double LoraPropagationLossModel::DoCalcRxPower (double txPowerDbm,
 {
   // TODO: assert sf
   return DoCalcRxPower(txPowerDbm, m_txSF, a, b);
+}
+
+// ------------------------------------------------------------------------- //
+
+NS_OBJECT_ENSURE_REGISTERED (RYLRLoraPropagationLossModel);
+
+TypeId 
+RYLRLoraPropagationLossModel::GetTypeId (void)
+{
+  static TypeId tid = TypeId ("ns3::RYLRLoraPropagationLossModel")
+    .SetParent<LoraPropagationLossModel> ()
+    .SetGroupName ("LoraPropagation")
+    .AddConstructor<RYLRLoraPropagationLossModel> ()
+  ;
+  return tid;
+}
+
+RYLRLoraPropagationLossModel::RYLRLoraPropagationLossModel ()
+  : LoraPropagationLossModel ()
+{
+    // Important: SF has to be updated before using the model 
+}
+
+RYLRLoraPropagationLossModel::RYLRLoraPropagationLossModel (uint8_t txSF)
+  : LoraPropagationLossModel (txSF)
+{
+}
+
+RYLRLoraPropagationLossModel::~RYLRLoraPropagationLossModel ()
+{
+}
+
+double
+RYLRLoraPropagationLossModel::DoCalcRxPower (double txPowerDbm,
+                                            uint8_t txSF,  // TODO: Use for calculation [Miller]
+                                            Ptr<MobilityModel> a,
+                                            Ptr<MobilityModel> b) const
+{
+
+  double distance = a->GetDistanceFrom (b);
+  // if (distance <= m_referenceDistance)
+  //   {
+  //     return txPowerDbm - m_referenceLoss;
+  //   }
+  /**
+   * The formula is:
+   * rx = 10 * log (Pr0(tx)) - n * 10 * log (d/d0)
+   *
+   * Pr0: rx power at reference distance d0 (W)
+   * d0: reference distance: 1.0 (m)
+   * d: distance (m)
+   * tx: tx power (dB)
+   * rx: dB
+   *
+   * Which, in our case is:
+   *
+   * rx = rx0(tx) - 10 * n * log (d/d0)
+   */
+  // double pathLossDb = 10 * m_exponent * std::log10 (distance / m_referenceDistance);
+  double pathLossDb = 10;
+  // double rxc = -m_referenceLoss - pathLossDb;
+  double rxc = -pathLossDb;
+  NS_LOG_DEBUG ("distance="<<distance<<"m, "<< "attenuation coefficient="<<rxc<<"db");  // Add SF?
+  return txPowerDbm + rxc;
+}
+
+int64_t
+RYLRLoraPropagationLossModel::DoAssignStreams (int64_t stream)
+{
+  return 1;
 }
 
 // ------------------------------------------------------------------------- //
