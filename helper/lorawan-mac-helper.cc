@@ -258,7 +258,17 @@ LorawanMacHelper::ConfigureForEuRegion (Ptr<ClassAEndDeviceLorawanMac> edMac) co
   /////////////////////
   // Preamble length //
   /////////////////////
-  edMac->SetNPreambleSymbols (8);
+  /**
+   * The duration of a receive window in number of symbols. This should be
+   * converted to time based or the reception parameter used.
+   *
+   * The downlink preamble transmitted by the gateways contains 7 symbols.
+   * The receiver requires 5 symbols to detect the preamble and synchronize.
+   * Therefore there must be a 5 symbols overlap between the receive window
+   * and the transmitted preamble.
+   * (Ref: Recommended SX1272/76 Settings for EU868 LoRaWAN Network Operation )
+   */
+  edMac->SetNPreambleSymbols (7);
 
   //////////////////////////////////////
   // Second receive window parameters //
