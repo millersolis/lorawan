@@ -20,6 +20,7 @@
 #include "ns3/periodic-sender-helper.h"
 #include "ns3/command-line.h"
 #include "ns3/network-server-helper.h"
+#include "ns3/propagation-loss-model.h"
 #include "ns3/correlated-shadowing-propagation-loss-model.h"
 #include "ns3/building-penetration-loss.h"
 #include "ns3/building-allocator.h"
@@ -90,6 +91,7 @@ int main (int argc, char *argv[])
   // LogComponentEnable("PeriodicSender", LOG_LEVEL_ALL);
   // LogComponentEnable("LoraMacHeader", LOG_LEVEL_ALL);
   // LogComponentEnable("LoraFrameHeader", LOG_LEVEL_ALL);
+  LogComponentEnable ("PropagationLossModel", LOG_LEVEL_ALL);
   // LogComponentEnable("NetworkScheduler", LOG_LEVEL_ALL);
   // LogComponentEnable("NetworkServer", LOG_LEVEL_ALL);
   // LogComponentEnable("NetworkStatus", LOG_LEVEL_ALL);

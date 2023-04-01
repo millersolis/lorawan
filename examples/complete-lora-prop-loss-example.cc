@@ -75,8 +75,8 @@ int main (int argc, char *argv[])
 
   // Set up logging
   LogComponentEnable ("CompleteLorawanNetworkExample", LOG_LEVEL_ALL);
-  // LogComponentEnable("LoraChannel", LOG_LEVEL_INFO);
-  // LogComponentEnable("LoraPhy", LOG_LEVEL_ALL);
+  LogComponentEnable("LoraChannel", LOG_LEVEL_INFO);
+  LogComponentEnable("LoraPhy", LOG_LEVEL_ALL);
   // LogComponentEnable("EndDeviceLoraPhy", LOG_LEVEL_ALL);
   // LogComponentEnable("GatewayLoraPhy", LOG_LEVEL_ALL);
   // LogComponentEnable("LoraInterferenceHelper", LOG_LEVEL_ALL);
@@ -118,7 +118,7 @@ int main (int argc, char *argv[])
    ************************/
 
   // Create the lora channel object
-  Ptr<RandomLoraPropagationLossModel> loss = CreateObject<RandomLoraPropagationLossModel> ();
+  Ptr<RYLRLoraPropagationLossModel> loss = CreateObject<RYLRLoraPropagationLossModel> ();
 
   if (addBuildings)
     {
@@ -259,7 +259,6 @@ int main (int argc, char *argv[])
   /**********************************************
    *  Set up the end device's spreading factor  *
    **********************************************/
-
   macHelper.SetSpreadingFactorsUp (endDevices, gateways, channel);
 
   /*********************************************
