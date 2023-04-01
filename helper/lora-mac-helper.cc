@@ -291,38 +291,39 @@ LoraMacHelper::SetSpreadingFactorsUp (NodeContainer endDevices, NodeContainer ga
 
       // NS_LOG_DEBUG ("Rx Power: " << highestRxPower);
       double rxPower = highestRxPower;
+      (void) rxPower; // avoid warning
 
       // Get the ED sensitivity
       Ptr<EndDeviceLoraPhy> edPhy = loraNetDevice->GetPhy ()->GetObject<EndDeviceLoraPhy> ();
       const double *edSensitivity = edPhy->sensitivity;
 
 
-      if (rxPower > *edSensitivity)
+      if (channel->GetRxPower (14, position, bestGatewayPosition, 7) > *edSensitivity)
         {
           mac->SetDataRate (5);
           sfQuantity[0] = sfQuantity[0] + 1;
         }
-      else if (rxPower > *(edSensitivity + 1))
+      else if (channel->GetRxPower (14, position, bestGatewayPosition, 8) > *(edSensitivity + 1))
         {
           mac->SetDataRate (4);
           sfQuantity[1] = sfQuantity[1] + 1;
         }
-      else if (rxPower > *(edSensitivity + 2))
+      else if (channel->GetRxPower (14, position, bestGatewayPosition, 9) > *(edSensitivity + 2))
         {
           mac->SetDataRate (3);
           sfQuantity[2] = sfQuantity[2] + 1;
         }
-      else if (rxPower > *(edSensitivity + 3))
+      else if (channel->GetRxPower (14, position, bestGatewayPosition, 10) > *(edSensitivity + 3))
         {
           mac->SetDataRate (2);
           sfQuantity[3] = sfQuantity[3] + 1;
         }
-      else if (rxPower > *(edSensitivity + 4))
+      else if (channel->GetRxPower (14, position, bestGatewayPosition, 11) > *(edSensitivity + 4))
         {
           mac->SetDataRate (1);
           sfQuantity[4] = sfQuantity[4] + 1;
         }
-      else if (rxPower > *(edSensitivity + 5))
+      else if (channel->GetRxPower (14, position, bestGatewayPosition, 12) > *(edSensitivity + 5))
         {
           mac->SetDataRate (0);
           sfQuantity[5] = sfQuantity[5] + 1;

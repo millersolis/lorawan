@@ -141,7 +141,7 @@ LoraChannel::Send (Ptr< LoraPhy > sender, Ptr< Packet > packet,
 
           // Compute received power using the loss model
           double rxPowerDbm = GetRxPower (txPowerDbm, senderMobility,
-                                          receiverMobility);
+                                          receiverMobility, txParams.sf);
 
           NS_LOG_DEBUG ("Propagation: txPower=" << txPowerDbm <<
                         "dbm, rxPower=" << rxPowerDbm << "dbm, " <<
@@ -195,8 +195,27 @@ double
 LoraChannel::GetRxPower (double txPowerDbm, Ptr<MobilityModel> senderMobility,
                          Ptr<MobilityModel> receiverMobility) const
 {
-  // TODO: update sf for lora loss models [Miller]
   return m_loss->CalcRxPower (txPowerDbm, senderMobility, receiverMobility);
+}
+
+double
+LoraChannel::GetRxPower (double txPowerDbm, Ptr<MobilityModel> senderMobility,
+                         Ptr<MobilityModel> receiverMobility, uint8_t sf) const
+{
+  UpdateLossSF(sf);
+  return m_loss->CalcRxPower (txPowerDbm, senderMobility, receiverMobility);
+}
+
+
+void
+LoraChannel::UpdateLossSF (uint8_t sf) const
+{
+  PropagationLossModel* loss = PeekPointer(m_loss);
+  LoraPropagationLossModel* loraLoss;
+  if (dynamic_cast<LoraPropagationLossModel*>(loss)) {
+    loraLoss = dynamic_cast<LoraPropagationLossModel*>(loss);
+    loraLoss->SetTxSF(sf);
+  }
 }
 
 std::ostream &operator << (std::ostream &os, const LoraChannelParameters &params)

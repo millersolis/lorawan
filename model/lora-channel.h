@@ -30,6 +30,7 @@
 #include "ns3/channel.h"
 #include "ns3/net-device.h"
 #include "ns3/propagation-loss-model.h"
+#include "ns3/lora-propagation-loss-model.h"
 #include "ns3/propagation-delay-model.h"
 #include "ns3/logical-lora-channel.h"
 #include "ns3/packet.h"
@@ -152,6 +153,10 @@ public:
     */
   double GetRxPower (double txPowerDbm, Ptr<MobilityModel> senderMobility,
                      Ptr<MobilityModel> receiverMobility) const;
+  double GetRxPower (double txPowerDbm, Ptr<MobilityModel> senderMobility,
+                     Ptr<MobilityModel> receiverMobility, uint8_t sf) const;
+
+  void UpdateLossSF (uint8_t sf) const;
 
 private:
   /**

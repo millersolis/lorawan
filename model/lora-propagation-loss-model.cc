@@ -118,7 +118,7 @@ RYLRLoraPropagationLossModel::~RYLRLoraPropagationLossModel ()
 
 double
 RYLRLoraPropagationLossModel::DoCalcRxPower (double txPowerDbm,
-                                            uint8_t txSF,  // TODO: Use for calculation [Miller]
+                                            uint8_t txSF,
                                             Ptr<MobilityModel> a,
                                             Ptr<MobilityModel> b) const
 {
@@ -143,7 +143,8 @@ RYLRLoraPropagationLossModel::DoCalcRxPower (double txPowerDbm,
    * rx = rx0(tx) - 10 * n * log (d/d0)
    */
   // double pathLossDb = 10 * m_exponent * std::log10 (distance / m_referenceDistance);
-  double pathLossDb = 10;
+  // double pathLossDb = 10 * txSF + 70;
+  double pathLossDb = 147; // for sf 11
   // double rxc = -m_referenceLoss - pathLossDb;
   double rxc = -pathLossDb;
   NS_LOG_DEBUG ("distance="<<distance<<"m, "<< "attenuation coefficient="<<rxc<<"db");  // Add SF?
