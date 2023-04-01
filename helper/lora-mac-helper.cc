@@ -270,8 +270,8 @@ LoraMacHelper::SetSpreadingFactorsUp (NodeContainer endDevices, NodeContainer ga
       Ptr<Node> bestGateway = gateways.Get (0);
       Ptr<MobilityModel> bestGatewayPosition = bestGateway->GetObject<MobilityModel> ();
 
-      // Assume devices transmit at 14 dBm
-      double highestRxPower = channel->GetRxPower (14, position, bestGatewayPosition);
+      // Assume devices transmit at 14 dBm and keep SF constant
+      double highestRxPower = channel->GetRxPower (14, position, bestGatewayPosition, 7);
 
       for (NodeContainer::Iterator currentGw = gateways.Begin () + 1;
            currentGw != gateways.End (); ++currentGw)
@@ -279,7 +279,7 @@ LoraMacHelper::SetSpreadingFactorsUp (NodeContainer endDevices, NodeContainer ga
           // Compute the power received from the current gateway
           Ptr<Node> curr = *currentGw;
           Ptr<MobilityModel> currPosition = curr->GetObject<MobilityModel> ();
-          double currentRxPower = channel->GetRxPower (14, position, currPosition);    // dBm
+          double currentRxPower = channel->GetRxPower (14, position, currPosition, 7);    // dBm
 
           if (currentRxPower > highestRxPower)
             {
