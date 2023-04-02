@@ -124,7 +124,7 @@ RYLRLoraPropagationLossModel::DoCalcRxPower (double txPowerDbm,
 {
 
   double distance = a->GetDistanceFrom (b);
-  if (distance <= 0)
+  if (distance < 0)
     distance = -distance;
 
   double pathLossDb;
@@ -133,8 +133,8 @@ RYLRLoraPropagationLossModel::DoCalcRxPower (double txPowerDbm,
   double antennaLossDb;
   double maxRange;  // in meters
 
-  if (txSF >= 7 && txSF <= 12) {
-    NS_LOG_DEBUG ("SF="<<txSF<<" not supported, using SF 7 to calculate rxPower");
+  if (!(txSF >= 7 && txSF <= 12)) {
+    NS_LOG_DEBUG ("SF="<<(int)txSF<<" not supported, using SF 7 to calculate rxPower");
     txSF = 7;
   }
 
@@ -143,19 +143,19 @@ RYLRLoraPropagationLossModel::DoCalcRxPower (double txPowerDbm,
     minPathLossDb = 49 + 14;       // RYLR experimental max RSSI was -49 for 14 txPowerDbm
     maxPathLossDb = 114 + 14;      // RYLR experimental min RSSI was -106 for 14 txPowerDbm
     antennaLossDb = 123 - 114;     // SX1276 sensitivity -134, for RYLR sensitivity -106
-    maxRange = 500;                // RYLR experimental distance for maxPathLossDb
+    maxRange = 900;                // RYLR experimental distance for maxPathLossDb
   }
   else if (txSF == 8) {
     minPathLossDb = 49 + 14;       // RYLR experimental max RSSI was -49 for 14 txPowerDbm
     maxPathLossDb = 112 + 14;      // RYLR experimental min RSSI was -106 for 14 txPowerDbm
     antennaLossDb = 126 - 112;     // SX1276 sensitivity -134, for RYLR sensitivity -106
-    maxRange = 675;                // RYLR experimental distance for maxPathLossDb
+    maxRange = 925;                // RYLR experimental distance for maxPathLossDb
   }
   else if (txSF == 9) {
     minPathLossDb = 49 + 14;       // RYLR experimental max RSSI was -49 for 14 txPowerDbm
     maxPathLossDb = 110 + 14;      // RYLR experimental min RSSI was -106 for 14 txPowerDbm
     antennaLossDb = 129 - 110;     // SX1276 sensitivity -134, for RYLR sensitivity -106
-    maxRange = 850;                // RYLR experimental distance for maxPathLossDb
+    maxRange = 975;                // RYLR experimental distance for maxPathLossDb
   }
   else if (txSF == 10) {
     minPathLossDb = 49 + 14;       // RYLR experimental max RSSI was -49 for 14 txPowerDbm
@@ -168,13 +168,13 @@ RYLRLoraPropagationLossModel::DoCalcRxPower (double txPowerDbm,
     minPathLossDb = 49 + 14;       // RYLR experimental max RSSI was -49 for 14 txPowerDbm
     maxPathLossDb = 106 + 14;      // RYLR experimental min RSSI was -106 for 14 txPowerDbm
     antennaLossDb = 134 - 106;     // SX1276 sensitivity -134, for RYLR sensitivity -106
-    maxRange = 1200;                // RYLR experimental distance for maxPathLossDb, was found to be ~600
+    maxRange = 1100;                // RYLR experimental distance for maxPathLossDb, was found to be ~600
   }
   else if (txSF == 12) {
     minPathLossDb = 49 + 14;       // RYLR experimental max RSSI was -49 for 14 txPowerDbm
     maxPathLossDb = 104 + 14;      // RYLR experimental min RSSI was -106 for 14 txPowerDbm
     antennaLossDb = 136 - 104;     // SX1276 sensitivity -134, for RYLR sensitivity -106
-    maxRange = 1375;                // RYLR experimental distance for maxPathLossDb
+    maxRange = 1275;                // RYLR experimental distance for maxPathLossDb
   }
  
   // TODO: Find better function to approximate loss with real data [Miller]
@@ -182,7 +182,7 @@ RYLRLoraPropagationLossModel::DoCalcRxPower (double txPowerDbm,
   pathLossDb = (((maxPathLossDb - minPathLossDb)/(maxRange - 0)) * distance) + minPathLossDb;
   // Make up for antenna loss from RYLR to compare with sensitivity values of SX1276 for reception
   double rxc = - pathLossDb + antennaLossDb;
-  NS_LOG_DEBUG ("distance="<<distance<<"m, "<< "attenuation coefficient="<<rxc<<"db");  // Add SF?
+  NS_LOG_DEBUG ("distance="<<distance<<"m, "<< "attenuation coefficient="<<rxc<<"db, SF="<<(int)txSF);
   return txPowerDbm + rxc;
 }
 
