@@ -149,10 +149,10 @@ GatewayLoraPhy::~GatewayLoraPhy ()
   NS_LOG_FUNCTION_NOARGS ();
 }
 
-// Uplink sensitivity (Source: SX1301 datasheet)
+// Uplink sensitivity (Source: SX1276 datasheet)
 // {SF7, SF8, SF9, SF10, SF11, SF12}
 const double GatewayLoraPhy::sensitivity[6] =
-{-130.0, -132.5, -135.0, -137.5, -140.0, -142.5};
+{-123, -126, -129, -132, -134, -136};
 
 void
 GatewayLoraPhy::AddReceptionPath (double frequencyMHz)

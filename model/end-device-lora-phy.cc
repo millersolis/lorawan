@@ -78,11 +78,11 @@ EndDeviceLoraPhy::~EndDeviceLoraPhy ()
 {
 }
 
-// Downlink sensitivity (from SX1272 datasheet)
+// Downlink sensitivity (from SX1276 datasheet)
 // {SF7, SF8, SF9, SF10, SF11, SF12}
 // These sensitivites are for a bandwidth of 125000 Hz
 const double EndDeviceLoraPhy::sensitivity[6] =
-{-124, -127, -130, -133, -135, -137};
+{-123, -126, -129, -132, -134, -136};
 
 void
 EndDeviceLoraPhy::SetSpreadingFactor (uint8_t sf)
